@@ -32,15 +32,93 @@
     <main class="container my-5" id="elMainContent">
         <!-- Home Section (Data Entry) -->
         <section id="elSectionHome">
-            <div class="p-5 mb-4 bg-white rounded-3 shadow-sm border">
-                <div class="container-fluid py-5 text-center">
-                    <h1 class="display-5 fw-bold">Welcome to ResumeBuilder Pro</h1>
-                    <p class="col-md-8 mx-auto fs-4">Build your professional resume quickly and easily. Start by adding your details below.</p>
-                </div>
+            <div class="p-4 mb-4 bg-white rounded-3 shadow-sm border">
+                <h1 class="display-6 fw-bold">ResumeBuilder Pro</h1>
+                <p class="fs-5 text-muted">Add your details below to generate your professional resume.</p>
             </div>
-            <!-- Future Data Entry Forms will go here -->
-            <div class="alert alert-info text-center">
-                Data entry forms are coming in Phase 3!
+            
+            <div class="row">
+                <!-- Left Column: Personal Info & Skills -->
+                <div class="col-md-6 mb-4">
+                    <!-- Personal Info -->
+                    <div class="card shadow-sm mb-4 border-0">
+                        <div class="card-body">
+                            <h3 class="card-title h5 mb-3">Personal Information</h3>
+                            <form id="formPersonalInfo">
+                                <div class="mb-3">
+                                    <label class="form-label text-secondary small fw-bold">FULL NAME</label>
+                                    <input type="text" class="form-control" id="txtName" required>
+                                </div>
+                                <div class="mb-3">
+                                    <label class="form-label text-secondary small fw-bold">EMAIL</label>
+                                    <input type="email" class="form-control" id="txtEmail" required>
+                                </div>
+                                <div class="mb-3">
+                                    <label class="form-label text-secondary small fw-bold">PHONE</label>
+                                    <input type="text" class="form-control" id="txtPhone">
+                                </div>
+                                <div class="mb-3">
+                                    <label class="form-label text-secondary small fw-bold">ADDRESS</label>
+                                    <input type="text" class="form-control" id="txtAddress">
+                                </div>
+                                <div class="mb-3">
+                                    <label class="form-label text-secondary small fw-bold">LINKS (LinkedIn, GitHub)</label>
+                                    <textarea class="form-control" id="txtLinks" rows="2"></textarea>
+                                </div>
+                                <button type="submit" class="btn btn-primary w-100 fw-bold" id="btnSavePersonalInfo">Save Personal Info</button>
+                            </form>
+                        </div>
+                    </div>
+
+                    <!-- Skills -->
+                    <div class="card shadow-sm border-0">
+                        <div class="card-body">
+                            <h3 class="card-title h5 mb-3">Skills</h3>
+                            <form id="formSkill" class="mb-3 row g-2">
+                                <div class="col-md-5">
+                                    <input type="text" class="form-control" id="txtSkillCategory" placeholder="Category (e.g. Languages)" required>
+                                </div>
+                                <div class="col-md-5">
+                                    <input type="text" class="form-control" id="txtSkillName" placeholder="Skill Name" required>
+                                </div>
+                                <div class="col-md-2">
+                                    <button type="submit" class="btn btn-success w-100 fw-bold" id="btnAddSkill">+</button>
+                                </div>
+                            </form>
+                            <div id="divSkillList" class="mt-3"></div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Right Column: Jobs -->
+                <div class="col-md-6 mb-4">
+                    <!-- Jobs -->
+                    <div class="card shadow-sm mb-4 border-0">
+                        <div class="card-body">
+                            <h3 class="card-title h5 mb-3">Work Experience</h3>
+                            <form id="formJob" class="mb-3">
+                                <div class="row g-2 mb-2">
+                                    <div class="col-md-6">
+                                        <input type="text" class="form-control" id="txtJobCompany" placeholder="Company Name" required>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <input type="text" class="form-control" id="txtJobTitle" placeholder="Job Title" required>
+                                    </div>
+                                </div>
+                                <div class="row g-2 mb-3">
+                                    <div class="col-md-6">
+                                        <input type="text" class="form-control" id="txtJobStart" placeholder="Start Date (e.g. May 2023)" required>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <input type="text" class="form-control" id="txtJobEnd" placeholder="End Date (e.g. Present)">
+                                    </div>
+                                </div>
+                                <button type="submit" class="btn btn-success w-100 fw-bold" id="btnAddJob">Add Job</button>
+                            </form>
+                            <div class="list-group mt-3" id="divJobList"></div>
+                        </div>
+                    </div>
+                </div>
             </div>
         </section>
 
@@ -58,6 +136,8 @@
     <!-- Local Bootstrap JS -->
     <script src="/assets/bootstrap/bootstrap.bundle.min.js"></script>
     <!-- Application Logic -->
+    <script src="/js/api.js"></script>
+    <script src="/js/forms.js"></script>
     <script src="/js/app.js"></script>
 </body>
 </html>

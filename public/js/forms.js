@@ -1,0 +1,144 @@
+/**
+ * Forms and Data Entry Logic
+ * Uses Hungarian notation for DOM elements and variables.
+ */
+
+document.addEventListener('DOMContentLoaded', () => {
+    // Personal Info Elements
+    const formPersonalInfo = document.getElementById('formPersonalInfo');
+    const txtName = document.getElementById('txtName');
+    const txtEmail = document.getElementById('txtEmail');
+    const txtPhone = document.getElementById('txtPhone');
+    const txtAddress = document.getElementById('txtAddress');
+    const txtLinks = document.getElementById('txtLinks');
+    const btnSavePersonalInfo = document.getElementById('btnSavePersonalInfo');
+
+    // Load Initial Data
+    const fnLoadData = async () => {
+        // Load Personal Info
+        const objPersonalInfo = await objApi.fnGetPersonalInfo();
+        if (objPersonalInfo && objPersonalInfo.intId) {
+            txtName.value = objPersonalInfo.strName || '';
+            txtEmail.value = objPersonalInfo.strEmail || '';
+            txtPhone.value = objPersonalInfo.strPhone || '';
+            txtAddress.value = objPersonalInfo.strAddress || '';
+            txtLinks.value = objPersonalInfo.strLinks || '';
+        }
+        
+        fnLoadJobs();
+        fnLoadSkills();
+    };
+
+    // Personal Info Submit
+    if (formPersonalInfo) {
+        formPersonalInfo.addEventListener('submit', async (objEvent) => {
+            objEvent.preventDefault();
+            btnSavePersonalInfo.disabled = true;
+            btnSavePersonalInfo.textContent = 'Saving...';
+            
+            const objData = {
+                strName: txtName.value,
+                strEmail: txtEmail.value,
+                strPhone: txtPhone.value,
+                strAddress: txtAddress.value,
+                strLinks: txtLinks.value
+            };
+            
+            await objApi.fnSavePersonalInfo(objData);
+            
+            btnSavePersonalInfo.disabled = false;
+            btnSavePersonalInfo.textContent = 'Saved!';
+            setTimeout(() => { btnSavePersonalInfo.textContent = 'Save Personal Info'; }, 2000);
+        });
+    }
+
+    // --- Jobs ---
+    const formJob = document.getElementById('formJob');
+    const divJobList = document.getElementById('divJobList');
+
+    const fnLoadJobs = async () => {
+        if (!divJobList) return;
+        const arrJobs = await objApi.fnGetJobs();
+        divJobList.innerHTML = '';
+        arrJobs.forEach(objJob => {
+            const elJob = document.createElement('div');
+            elJob.className = 'list-group-item d-flex justify-content-between align-items-center';
+            elJob.innerHTML = `
+                <div>
+                    <h6 class="mb-0 fw-bold">${objJob.strTitle} <span class="fw-normal text-muted">at ${objJob.strCompany}</span></h6>
+                    <small class="text-secondary">${objJob.strStartDate} - ${objJob.strEndDate}</small>
+                </div>
+                <button class="btn btn-sm btn-outline-danger btnDeleteJob" data-id="${objJob.intId}">Remove</button>
+            `;
+            divJobList.appendChild(elJob);
+        });
+
+        // Attach delete events
+        document.querySelectorAll('.btnDeleteJob').forEach(btn => {
+            btn.addEventListener('click', async (objEvent) => {
+                const intId = objEvent.target.getAttribute('data-id');
+                await objApi.fnDeleteJob(intId);
+                fnLoadJobs(); // refresh list
+            });
+        });
+    };
+
+    if (formJob) {
+        formJob.addEventListener('submit', async (objEvent) => {
+            objEvent.preventDefault();
+            const objData = {
+                strCompany: document.getElementById('txtJobCompany').value,
+                strTitle: document.getElementById('txtJobTitle').value,
+                strStartDate: document.getElementById('txtJobStart').value,
+                strEndDate: document.getElementById('txtJobEnd').value
+            };
+            await objApi.fnSaveJob(objData);
+            formJob.reset();
+            fnLoadJobs();
+        });
+    }
+
+    // --- Skills ---
+    const formSkill = document.getElementById('formSkill');
+    const divSkillList = document.getElementById('divSkillList');
+
+    const fnLoadSkills = async () => {
+        if (!divSkillList) return;
+        const arrSkills = await objApi.fnGetSkills();
+        divSkillList.innerHTML = '';
+        arrSkills.forEach(objSkill => {
+            const elSkill = document.createElement('span');
+            elSkill.className = 'badge bg-primary me-2 p-2 mb-2 d-inline-flex align-items-center rounded-pill';
+            elSkill.innerHTML = `
+                <span class="fw-normal opacity-75 me-1">${objSkill.strCategory}:</span> ${objSkill.strName}
+                <button type="button" class="btn-close btn-close-white ms-2 btnDeleteSkill" style="font-size: 0.5rem;" data-id="${objSkill.intId}"></button>
+            `;
+            divSkillList.appendChild(elSkill);
+        });
+
+        document.querySelectorAll('.btnDeleteSkill').forEach(btn => {
+            btn.addEventListener('click', async (objEvent) => {
+                const intId = objEvent.target.getAttribute('data-id');
+                await objApi.fnDeleteSkill(intId);
+                fnLoadSkills();
+            });
+        });
+    };
+
+    if (formSkill) {
+        formSkill.addEventListener('submit', async (objEvent) => {
+            objEvent.preventDefault();
+            const objData = {
+                strCategory: document.getElementById('txtSkillCategory').value,
+                strName: document.getElementById('txtSkillName').value
+            };
+            await objApi.fnSaveSkill(objData);
+            document.getElementById('txtSkillName').value = ''; // Only clear name, keep category for rapid entry
+            document.getElementById('txtSkillName').focus();
+            fnLoadSkills();
+        });
+    }
+
+    // Initialize Page
+    fnLoadData();
+});

@@ -100,6 +100,56 @@ objApp.delete('/api/skills/:id', (objReq, objRes) => {
     });
 });
 
+// GET Certifications
+objApp.get('/api/certifications', (objReq, objRes) => {
+    objDb.all('SELECT * FROM tblCertifications', [], (objErr, arrRows) => {
+        if (objErr) return objRes.status(500).json({ error: objErr.message });
+        objRes.json(arrRows);
+    });
+});
+
+// POST Certification
+objApp.post('/api/certifications', (objReq, objRes) => {
+    const { strName, strDate, strDetails } = objReq.body;
+    objDb.run('INSERT INTO tblCertifications (strName, strDate, strDetails) VALUES (?, ?, ?)', [strName, strDate, strDetails], function(objErr) {
+        if (objErr) return objRes.status(500).json({ error: objErr.message });
+        objRes.json({ intId: this.lastID });
+    });
+});
+
+// DELETE Certification
+objApp.delete('/api/certifications/:id', (objReq, objRes) => {
+    objDb.run('DELETE FROM tblCertifications WHERE intId = ?', objReq.params.id, function(objErr) {
+        if (objErr) return objRes.status(500).json({ error: objErr.message });
+        objRes.json({ deleted: this.changes });
+    });
+});
+
+// GET Awards
+objApp.get('/api/awards', (objReq, objRes) => {
+    objDb.all('SELECT * FROM tblAwards', [], (objErr, arrRows) => {
+        if (objErr) return objRes.status(500).json({ error: objErr.message });
+        objRes.json(arrRows);
+    });
+});
+
+// POST Award
+objApp.post('/api/awards', (objReq, objRes) => {
+    const { strName, strDate, strDetails } = objReq.body;
+    objDb.run('INSERT INTO tblAwards (strName, strDate, strDetails) VALUES (?, ?, ?)', [strName, strDate, strDetails], function(objErr) {
+        if (objErr) return objRes.status(500).json({ error: objErr.message });
+        objRes.json({ intId: this.lastID });
+    });
+});
+
+// DELETE Award
+objApp.delete('/api/awards/:id', (objReq, objRes) => {
+    objDb.run('DELETE FROM tblAwards WHERE intId = ?', objReq.params.id, function(objErr) {
+        if (objErr) return objRes.status(500).json({ error: objErr.message });
+        objRes.json({ deleted: this.changes });
+    });
+});
+
 // Serve static files from the public directory
 objApp.use(express.static(path.join(__dirname, '../public')));
 
