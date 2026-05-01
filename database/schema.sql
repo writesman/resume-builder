@@ -41,3 +41,14 @@ CREATE TABLE IF NOT EXISTS tblAwards (
     strDate TEXT,
     strDetails TEXT
 );
+
+CREATE TABLE IF NOT EXISTS tblEducation (
+    intId INTEGER PRIMARY KEY AUTOINCREMENT,
+    strSchool TEXT,
+    strDegree TEXT,
+    strStartDate TEXT,
+    strEndDate TEXT,
+    strGpa TEXT,
+    strHonors TEXT,
+    strActivities TEXT
+);

@@ -54,5 +54,23 @@ const objApi = {
     fnDeleteSkill: async (intId) => {
         const objResponse = await fetch(`${strBaseUrl}/skills/${intId}`, { method: 'DELETE' });
         return objResponse.json();
+    },
+
+    // --- Education ---
+    fnGetEducation: async () => {
+        const objResponse = await fetch(`${strBaseUrl}/education`);
+        return objResponse.json();
+    },
+    fnSaveEducation: async (objData) => {
+        const objResponse = await fetch(`${strBaseUrl}/education`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(objData)
+        });
+        return objResponse.json();
+    },
+    fnDeleteEducation: async (intId) => {
+        const objResponse = await fetch(`${strBaseUrl}/education/${intId}`, { method: 'DELETE' });
+        return objResponse.json();
     }
 };

@@ -48,21 +48,59 @@ objApp.post('/api/personal-info', (objReq, objRes) => {
 
 // GET Jobs
 objApp.get('/api/jobs', (objReq, objRes) => {
-    objDb.all('SELECT * FROM tblJobs', [], (objErr, arrRows) => {
+    const strSql = `
+        SELECT j.*, GROUP_CONCAT(r.strDetail, '|||') as strResponsibilities
+        FROM tblJobs j
+        LEFT JOIN tblJobResponsibilities r ON j.intId = r.intJobId
+        GROUP BY j.intId
+    `;
+    objDb.all(strSql, [], (objErr, arrRows) => {
         if (objErr) return objRes.status(500).json({ error: objErr.message });
+        
+        // Map the concatenated string back into an array
+        arrRows.forEach(objRow => {
+            objRow.arrResponsibilities = objRow.strResponsibilities ? objRow.strResponsibilities.split('|||') : [];
+            delete objRow.strResponsibilities;
+        });
+        
         objRes.json(arrRows);
     });
 });
 
 // POST Job
 objApp.post('/api/jobs', (objReq, objRes) => {
-    const { strCompany, strTitle, strStartDate, strEndDate } = objReq.body;
+    const { strCompany, strTitle, strStartDate, strEndDate, strResponsibilities } = objReq.body;
     objDb.run(
         'INSERT INTO tblJobs (strCompany, strTitle, strStartDate, strEndDate) VALUES (?, ?, ?, ?)',
         [strCompany, strTitle, strStartDate, strEndDate],
         function(objErr) {
             if (objErr) return objRes.status(500).json({ error: objErr.message });
-            objRes.json({ intId: this.lastID });
+            
+            const intJobId = this.lastID;
+            
+            // If responsibilities were provided, insert them into the child table
+            if (strResponsibilities && strResponsibilities.trim() !== '') {
+                const arrResp = strResponsibilities.split('\n').filter(r => r.trim() !== '');
+                if (arrResp.length > 0) {
+                    const arrPlaceholders = arrResp.map(() => '(?, ?)').join(', ');
+                    const arrValues = [];
+                    arrResp.forEach(r => {
+                        arrValues.push(intJobId, r.trim());
+                    });
+                    
+                    objDb.run(
+                        `INSERT INTO tblJobResponsibilities (intJobId, strDetail) VALUES ${arrPlaceholders}`,
+                        arrValues,
+                        function(objRespErr) {
+                            if (objRespErr) return objRes.status(500).json({ error: objRespErr.message });
+                            objRes.json({ intId: intJobId });
+                        }
+                    );
+                    return;
+                }
+            }
+            
+            objRes.json({ intId: intJobId });
         }
     );
 });
@@ -145,6 +183,35 @@ objApp.post('/api/awards', (objReq, objRes) => {
 // DELETE Award
 objApp.delete('/api/awards/:id', (objReq, objRes) => {
     objDb.run('DELETE FROM tblAwards WHERE intId = ?', objReq.params.id, function(objErr) {
+        if (objErr) return objRes.status(500).json({ error: objErr.message });
+        objRes.json({ deleted: this.changes });
+    });
+});
+
+// GET Education
+objApp.get('/api/education', (objReq, objRes) => {
+    objDb.all('SELECT * FROM tblEducation', [], (objErr, arrRows) => {
+        if (objErr) return objRes.status(500).json({ error: objErr.message });
+        objRes.json(arrRows);
+    });
+});
+
+// POST Education
+objApp.post('/api/education', (objReq, objRes) => {
+    const { strSchool, strDegree, strStartDate, strEndDate, strGpa, strHonors, strActivities } = objReq.body;
+    objDb.run(
+        'INSERT INTO tblEducation (strSchool, strDegree, strStartDate, strEndDate, strGpa, strHonors, strActivities) VALUES (?, ?, ?, ?, ?, ?, ?)', 
+        [strSchool, strDegree, strStartDate, strEndDate, strGpa, strHonors, strActivities], 
+        function(objErr) {
+            if (objErr) return objRes.status(500).json({ error: objErr.message });
+            objRes.json({ intId: this.lastID });
+        }
+    );
+});
+
+// DELETE Education
+objApp.delete('/api/education/:id', (objReq, objRes) => {
+    objDb.run('DELETE FROM tblEducation WHERE intId = ?', objReq.params.id, function(objErr) {
         if (objErr) return objRes.status(500).json({ error: objErr.message });
         objRes.json({ deleted: this.changes });
     });

@@ -27,6 +27,7 @@ document.addEventListener('DOMContentLoaded', () => {
         
         fnLoadJobs();
         fnLoadSkills();
+        fnLoadEducation();
     };
 
     // Personal Info Submit
@@ -90,11 +91,61 @@ document.addEventListener('DOMContentLoaded', () => {
                 strCompany: document.getElementById('txtJobCompany').value,
                 strTitle: document.getElementById('txtJobTitle').value,
                 strStartDate: document.getElementById('txtJobStart').value,
-                strEndDate: document.getElementById('txtJobEnd').value
+                strEndDate: document.getElementById('txtJobEnd').value,
+                strResponsibilities: document.getElementById('txtJobResponsibilities').value
             };
             await objApi.fnSaveJob(objData);
             formJob.reset();
             fnLoadJobs();
+        });
+    }
+
+    // --- Education ---
+    const formEducation = document.getElementById('formEducation');
+    const divEducationList = document.getElementById('divEducationList');
+
+    const fnLoadEducation = async () => {
+        if (!divEducationList) return;
+        const arrEdu = await objApi.fnGetEducation();
+        divEducationList.innerHTML = '';
+        arrEdu.forEach(objEdu => {
+            const elEdu = document.createElement('div');
+            elEdu.className = 'list-group-item d-flex justify-content-between align-items-center';
+            elEdu.innerHTML = `
+                <div>
+                    <h6 class="mb-0 fw-bold">${objEdu.strDegree} <span class="fw-normal text-muted">at ${objEdu.strSchool}</span></h6>
+                    <small class="text-secondary">${objEdu.strStartDate} - ${objEdu.strEndDate}</small>
+                </div>
+                <button class="btn btn-sm btn-outline-danger btnDeleteEducation" data-id="${objEdu.intId}">Remove</button>
+            `;
+            divEducationList.appendChild(elEdu);
+        });
+
+        // Attach delete events
+        document.querySelectorAll('.btnDeleteEducation').forEach(btn => {
+            btn.addEventListener('click', async (objEvent) => {
+                const intId = objEvent.target.getAttribute('data-id');
+                await objApi.fnDeleteEducation(intId);
+                fnLoadEducation();
+            });
+        });
+    };
+
+    if (formEducation) {
+        formEducation.addEventListener('submit', async (objEvent) => {
+            objEvent.preventDefault();
+            const objData = {
+                strSchool: document.getElementById('txtEduSchool').value,
+                strDegree: document.getElementById('txtEduDegree').value,
+                strStartDate: document.getElementById('txtEduStart').value,
+                strEndDate: document.getElementById('txtEduEnd').value,
+                strGpa: document.getElementById('txtEduGpa').value,
+                strHonors: document.getElementById('txtEduHonors').value,
+                strActivities: document.getElementById('txtEduActivities').value
+            };
+            await objApi.fnSaveEducation(objData);
+            formEducation.reset();
+            fnLoadEducation();
         });
     }
 

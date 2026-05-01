@@ -44,6 +44,9 @@ document.addEventListener('DOMContentLoaded', () => {
         btnNavResume.addEventListener('click', (objEvent) => {
             objEvent.preventDefault();
             fnShowSection(elSectionResume, btnNavResume);
+            if (typeof window.fnGenerateResumePreview === 'function') {
+                window.fnGenerateResumePreview();
+            }
         });
     }
 });

@@ -9,7 +9,7 @@
 </head>
 <body class="bg-light">
     <!-- Navigation -->
-    <nav class="navbar navbar-expand-lg navbar-dark bg-primary shadow-sm">
+    <nav class="navbar navbar-expand-lg navbar-dark bg-primary shadow-sm d-print-none">
         <div class="container">
             <a class="navbar-brand" href="#">ResumeBuilder Pro</a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#elNavbarNav" aria-controls="elNavbarNav" aria-expanded="false" aria-label="Toggle navigation">
@@ -90,8 +90,44 @@
                     </div>
                 </div>
 
-                <!-- Right Column: Jobs -->
+                <!-- Right Column: Jobs and Education -->
                 <div class="col-md-6 mb-4">
+                    <!-- Education -->
+                    <div class="card shadow-sm mb-4 border-0">
+                        <div class="card-body">
+                            <h3 class="card-title h5 mb-3">Education</h3>
+                            <form id="formEducation" class="mb-3">
+                                <div class="row g-2 mb-2">
+                                    <div class="col-md-6">
+                                        <input type="text" class="form-control" id="txtEduSchool" placeholder="School Name" required>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <input type="text" class="form-control" id="txtEduDegree" placeholder="Degree / Major" required>
+                                    </div>
+                                </div>
+                                <div class="row g-2 mb-3">
+                                    <div class="col-md-6">
+                                        <input type="text" class="form-control" id="txtEduStart" placeholder="Start Date" required>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <input type="text" class="form-control" id="txtEduEnd" placeholder="End Date">
+                                    </div>
+                                </div>
+                                <div class="mb-3">
+                                    <input type="text" class="form-control" id="txtEduGpa" placeholder="GPA (Optional)">
+                                </div>
+                                <div class="mb-3">
+                                    <textarea class="form-control" id="txtEduHonors" rows="2" placeholder="Honors / Awards (Optional, one per line)"></textarea>
+                                </div>
+                                <div class="mb-3">
+                                    <textarea class="form-control" id="txtEduActivities" rows="2" placeholder="Activities / Societies (Optional, one per line)"></textarea>
+                                </div>
+                                <button type="submit" class="btn btn-success w-100 fw-bold" id="btnAddEducation">Add Education</button>
+                            </form>
+                            <div class="list-group mt-3" id="divEducationList"></div>
+                        </div>
+                    </div>
+
                     <!-- Jobs -->
                     <div class="card shadow-sm mb-4 border-0">
                         <div class="card-body">
@@ -113,6 +149,9 @@
                                         <input type="text" class="form-control" id="txtJobEnd" placeholder="End Date (e.g. Present)">
                                     </div>
                                 </div>
+                                <div class="mb-3">
+                                    <textarea class="form-control" id="txtJobResponsibilities" rows="3" placeholder="Responsibilities / Details (one per line)"></textarea>
+                                </div>
                                 <button type="submit" class="btn btn-success w-100 fw-bold" id="btnAddJob">Add Job</button>
                             </form>
                             <div class="list-group mt-3" id="divJobList"></div>
@@ -124,10 +163,48 @@
 
         <!-- Resume Preview Section -->
         <section id="elSectionResume" class="d-none">
-            <div class="card shadow-sm border-0">
-                <div class="card-body p-5 text-center">
-                    <h2 class="card-title">Your Resume Preview</h2>
-                    <p class="card-text text-muted">Coming in Phase 4...</p>
+            <div class="d-flex justify-content-between align-items-center mb-4 d-print-none">
+                <h2 class="h3 m-0">Resume Preview</h2>
+                <button class="btn btn-primary fw-bold shadow-sm" id="btnPrintResume">
+                    Print / Save as PDF
+                </button>
+            </div>
+            
+            <!-- The Actual Resume Page (styled like a piece of paper) -->
+            <div class="card shadow border-0" id="elResumeDocument" style="min-height: 1056px; max-width: 8.5in; margin: 0 auto;">
+                <div class="card-body p-5">
+                    <!-- Header (Name & Contact) -->
+                    <div class="text-center mb-4 border-bottom pb-4">
+                        <h1 class="display-5 fw-bold text-uppercase mb-2 text-dark" id="lblResumeName">Your Name</h1>
+                        <p class="fs-6 text-secondary mb-1" id="lblResumeContact">
+                            Phone | Email | Address
+                        </p>
+                        <p class="text-primary mb-0 small" id="lblResumeLinks"></p>
+                    </div>
+
+                    <!-- Education -->
+                    <div class="mb-4">
+                        <h4 class="text-uppercase border-bottom pb-2 mb-3 text-secondary h5 fw-bold tracking-wide">Education</h4>
+                        <div id="divResumeEducation">
+                            <!-- Education injected here via JS -->
+                        </div>
+                    </div>
+
+                    <!-- Work Experience -->
+                    <div class="mb-4">
+                        <h4 class="text-uppercase border-bottom pb-2 mb-3 text-secondary h5 fw-bold tracking-wide">Professional Experience</h4>
+                        <div id="divResumeJobs">
+                            <!-- Jobs injected here via JS -->
+                        </div>
+                    </div>
+
+                    <!-- Skills -->
+                    <div class="mb-4">
+                        <h4 class="text-uppercase border-bottom pb-2 mb-3 text-secondary h5 fw-bold tracking-wide">Technical Skills</h4>
+                        <div id="divResumeSkills">
+                            <!-- Skills injected here via JS -->
+                        </div>
+                    </div>
                 </div>
             </div>
         </section>
@@ -138,6 +215,7 @@
     <!-- Application Logic -->
     <script src="/js/api.js"></script>
     <script src="/js/forms.js"></script>
+    <script src="/js/preview.js"></script>
     <script src="/js/app.js"></script>
 </body>
 </html>
