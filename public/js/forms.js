@@ -57,6 +57,17 @@ document.addEventListener('DOMContentLoaded', () => {
     const formJob = document.getElementById('formJob');
     const divJobList = document.getElementById('divJobList');
 
+    // --- Date Formatter ---
+    const fnFormatDate = (strDate) => {
+        if (!strDate) return 'Present';
+        const arrParts = strDate.split('-');
+        if (arrParts.length === 2) {
+            const objDate = new Date(parseInt(arrParts[0]), parseInt(arrParts[1]) - 1);
+            return objDate.toLocaleString('default', { month: 'short', year: 'numeric' });
+        }
+        return strDate;
+    };
+
     const fnLoadJobs = async () => {
         if (!divJobList) return;
         const arrJobs = await objApi.fnGetJobs();
@@ -67,7 +78,7 @@ document.addEventListener('DOMContentLoaded', () => {
             elJob.innerHTML = `
                 <div>
                     <h6 class="mb-0 fw-bold">${objJob.strTitle} <span class="fw-normal text-muted">at ${objJob.strCompany}</span></h6>
-                    <small class="text-secondary">${objJob.strStartDate} - ${objJob.strEndDate}</small>
+                    <small class="text-secondary">${fnFormatDate(objJob.strStartDate)} - ${fnFormatDate(objJob.strEndDate)}</small>
                 </div>
                 <button class="btn btn-sm btn-outline-danger btnDeleteJob" data-id="${objJob.intId}">Remove</button>
             `;
@@ -114,7 +125,7 @@ document.addEventListener('DOMContentLoaded', () => {
             elEdu.innerHTML = `
                 <div>
                     <h6 class="mb-0 fw-bold">${objEdu.strDegree} <span class="fw-normal text-muted">at ${objEdu.strSchool}</span></h6>
-                    <small class="text-secondary">${objEdu.strStartDate} - ${objEdu.strEndDate}</small>
+                    <small class="text-secondary">${fnFormatDate(objEdu.strStartDate)} - ${fnFormatDate(objEdu.strEndDate)}</small>
                 </div>
                 <button class="btn btn-sm btn-outline-danger btnDeleteEducation" data-id="${objEdu.intId}">Remove</button>
             `;
@@ -184,11 +195,79 @@ document.addEventListener('DOMContentLoaded', () => {
                 strName: document.getElementById('txtSkillName').value
             };
             await objApi.fnSaveSkill(objData);
-            document.getElementById('txtSkillName').value = ''; // Only clear name, keep category for rapid entry
-            document.getElementById('txtSkillName').focus();
+            formSkill.reset();
             fnLoadSkills();
         });
     }
+
+    // --- Settings (API Key) ---
+    const txtGeminiKey = document.getElementById('txtGeminiKey');
+    const btnSaveSettings = document.getElementById('btnSaveSettings');
+    
+    if (txtGeminiKey && btnSaveSettings) {
+        // Load saved key on init
+        const strSavedKey = localStorage.getItem('strGeminiKey');
+        if (strSavedKey) {
+            txtGeminiKey.value = strSavedKey;
+        }
+
+        btnSaveSettings.addEventListener('click', () => {
+            localStorage.setItem('strGeminiKey', txtGeminiKey.value.trim());
+            btnSaveSettings.textContent = 'Saved!';
+            setTimeout(() => { btnSaveSettings.textContent = 'Save Settings'; }, 2000);
+        });
+    }
+
+    // --- AI Enhance Handlers ---
+    const fnHandleEnhance = async (strBtnId, strInputId, strContext) => {
+        const btn = document.getElementById(strBtnId);
+        const input = document.getElementById(strInputId);
+        if (!btn || !input) return;
+
+        btn.addEventListener('click', async () => {
+            const strText = input.value.trim();
+            if (!strText) {
+                Swal.fire({
+                    icon: 'warning',
+                    title: 'Hold up!',
+                    text: 'Please enter some text to enhance first.'
+                });
+                return;
+            }
+
+            const strApiKey = localStorage.getItem('strGeminiKey');
+            if (!strApiKey) {
+                Swal.fire({
+                    icon: 'info',
+                    title: 'API Key Required',
+                    text: 'Please configure your Gemini API Key in the Settings tab first.'
+                });
+                return;
+            }
+
+            const strOriginalText = btn.textContent;
+            btn.textContent = '✨ Working...';
+            btn.disabled = true;
+
+            try {
+                const strEnhanced = await objApi.fnEnhanceText(strText, strContext, strApiKey);
+                input.value = strEnhanced;
+            } catch (objErr) {
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Enhancement Failed',
+                    text: objErr.message
+                });
+            } finally {
+                btn.textContent = strOriginalText;
+                btn.disabled = false;
+            }
+        });
+    };
+
+    fnHandleEnhance('btnAiResponsibilities', 'txtJobResponsibilities', 'job');
+    fnHandleEnhance('btnAiHonors', 'txtEduHonors', 'honors');
+    fnHandleEnhance('btnAiActivities', 'txtEduActivities', 'activities');
 
     // Initialize Page
     fnLoadData();

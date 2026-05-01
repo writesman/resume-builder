@@ -36,6 +36,17 @@ document.addEventListener('DOMContentLoaded', () => {
             lblResumeLinks.textContent = '';
         }
 
+        // Utility to format YYYY-MM to "Month YYYY"
+        const fnFormatDate = (strDate) => {
+            if (!strDate) return 'Present';
+            const arrParts = strDate.split('-');
+            if (arrParts.length === 2) {
+                const objDate = new Date(parseInt(arrParts[0]), parseInt(arrParts[1]) - 1);
+                return objDate.toLocaleString('default', { month: 'short', year: 'numeric' });
+            }
+            return strDate;
+        };
+
         // 3. Populate Education
         const divResumeEducation = document.getElementById('divResumeEducation');
         divResumeEducation.innerHTML = '';
@@ -64,7 +75,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 elEdu.innerHTML = `
                     <div class="d-flex justify-content-between align-items-baseline mb-1">
                         <h5 class="fw-bold mb-0 text-dark">${objEdu.strDegree}</h5>
-                        <span class="text-secondary fw-bold small">${objEdu.strStartDate} - ${objEdu.strEndDate || 'Present'}</span>
+                        <span class="text-secondary fw-bold small">${fnFormatDate(objEdu.strStartDate)} - ${fnFormatDate(objEdu.strEndDate)}</span>
                     </div>
                     <h6 class="text-secondary fst-italic mb-2">${objEdu.strSchool}</h6>
                     ${strDetailsHtml ? `<div class="small text-muted mb-0">${strDetailsHtml}</div>` : ''}
@@ -91,7 +102,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 elJob.innerHTML = `
                     <div class="d-flex justify-content-between align-items-baseline mb-1">
                         <h5 class="fw-bold mb-0 text-dark">${objJob.strTitle}</h5>
-                        <span class="text-secondary fw-bold small">${objJob.strStartDate} - ${objJob.strEndDate || 'Present'}</span>
+                        <span class="text-secondary fw-bold small">${fnFormatDate(objJob.strStartDate)} - ${fnFormatDate(objJob.strEndDate)}</span>
                     </div>
                     <h6 class="text-secondary fst-italic mb-2">${objJob.strCompany}</h6>
                     ${strResponsibilitiesHtml}

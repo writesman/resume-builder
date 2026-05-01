@@ -7,8 +7,10 @@ document.addEventListener('DOMContentLoaded', () => {
     // DOM Elements
     const btnNavHome = document.getElementById('btnNavHome');
     const btnNavResume = document.getElementById('btnNavResume');
+    const btnNavSettings = document.getElementById('btnNavSettings');
     const elSectionHome = document.getElementById('elSectionHome');
     const elSectionResume = document.getElementById('elSectionResume');
+    const elSectionSettings = document.getElementById('elSectionSettings');
 
     /**
      * Hides all main sections
@@ -16,9 +18,11 @@ document.addEventListener('DOMContentLoaded', () => {
     const fnHideAllSections = () => {
         elSectionHome.classList.add('d-none');
         elSectionResume.classList.add('d-none');
+        if (elSectionSettings) elSectionSettings.classList.add('d-none');
         
         btnNavHome.classList.remove('active');
         btnNavResume.classList.remove('active');
+        if (btnNavSettings) btnNavSettings.classList.remove('active');
     };
 
     /**
@@ -47,6 +51,13 @@ document.addEventListener('DOMContentLoaded', () => {
             if (typeof window.fnGenerateResumePreview === 'function') {
                 window.fnGenerateResumePreview();
             }
+        });
+    }
+
+    if (btnNavSettings && elSectionSettings) {
+        btnNavSettings.addEventListener('click', (objEvent) => {
+            objEvent.preventDefault();
+            fnShowSection(elSectionSettings, btnNavSettings);
         });
     }
 });

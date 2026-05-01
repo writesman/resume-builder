@@ -23,6 +23,9 @@
                     <li class="nav-item">
                         <a class="nav-link" href="#" id="btnNavResume">Preview Resume</a>
                     </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#" id="btnNavSettings">Settings</a>
+                    </li>
                 </ul>
             </div>
         </div>
@@ -107,20 +110,30 @@
                                 </div>
                                 <div class="row g-2 mb-3">
                                     <div class="col-md-6">
-                                        <input type="text" class="form-control" id="txtEduStart" placeholder="Start Date" required>
+                                        <label class="form-label text-secondary small fw-bold mb-1">START DATE</label>
+                                        <input type="month" class="form-control" id="txtEduStart" required>
                                     </div>
                                     <div class="col-md-6">
-                                        <input type="text" class="form-control" id="txtEduEnd" placeholder="End Date">
+                                        <label class="form-label text-secondary small fw-bold mb-1">END DATE (Leave empty if Present)</label>
+                                        <input type="month" class="form-control" id="txtEduEnd">
                                     </div>
                                 </div>
                                 <div class="mb-3">
                                     <input type="text" class="form-control" id="txtEduGpa" placeholder="GPA (Optional)">
                                 </div>
                                 <div class="mb-3">
-                                    <textarea class="form-control" id="txtEduHonors" rows="2" placeholder="Honors / Awards (Optional, one per line)"></textarea>
+                                    <div class="d-flex justify-content-between align-items-center mb-1">
+                                        <label class="form-label text-secondary small fw-bold mb-0">HONORS / AWARDS (Optional, one per line)</label>
+                                        <button type="button" class="btn btn-sm btn-outline-primary" id="btnAiHonors">✨ Enhance</button>
+                                    </div>
+                                    <textarea class="form-control" id="txtEduHonors" rows="2"></textarea>
                                 </div>
                                 <div class="mb-3">
-                                    <textarea class="form-control" id="txtEduActivities" rows="2" placeholder="Activities / Societies (Optional, one per line)"></textarea>
+                                    <div class="d-flex justify-content-between align-items-center mb-1">
+                                        <label class="form-label text-secondary small fw-bold mb-0">ACTIVITIES / SOCIETIES (Optional, one per line)</label>
+                                        <button type="button" class="btn btn-sm btn-outline-primary" id="btnAiActivities">✨ Enhance</button>
+                                    </div>
+                                    <textarea class="form-control" id="txtEduActivities" rows="2"></textarea>
                                 </div>
                                 <button type="submit" class="btn btn-success w-100 fw-bold" id="btnAddEducation">Add Education</button>
                             </form>
@@ -143,14 +156,20 @@
                                 </div>
                                 <div class="row g-2 mb-3">
                                     <div class="col-md-6">
-                                        <input type="text" class="form-control" id="txtJobStart" placeholder="Start Date (e.g. May 2023)" required>
+                                        <label class="form-label text-secondary small fw-bold mb-1">START DATE</label>
+                                        <input type="month" class="form-control" id="txtJobStart" required>
                                     </div>
                                     <div class="col-md-6">
-                                        <input type="text" class="form-control" id="txtJobEnd" placeholder="End Date (e.g. Present)">
+                                        <label class="form-label text-secondary small fw-bold mb-1">END DATE (Leave empty if Present)</label>
+                                        <input type="month" class="form-control" id="txtJobEnd">
                                     </div>
                                 </div>
                                 <div class="mb-3">
-                                    <textarea class="form-control" id="txtJobResponsibilities" rows="3" placeholder="Responsibilities / Details (one per line)"></textarea>
+                                    <div class="d-flex justify-content-between align-items-center mb-1">
+                                        <label class="form-label text-secondary small fw-bold mb-0">RESPONSIBILITIES / DETAILS (one per line)</label>
+                                        <button type="button" class="btn btn-sm btn-outline-primary" id="btnAiResponsibilities">✨ Enhance</button>
+                                    </div>
+                                    <textarea class="form-control" id="txtJobResponsibilities" rows="3"></textarea>
                                 </div>
                                 <button type="submit" class="btn btn-success w-100 fw-bold" id="btnAddJob">Add Job</button>
                             </form>
@@ -208,10 +227,33 @@
                 </div>
             </div>
         </section>
+
+        <!-- Settings Section -->
+        <section id="elSectionSettings" class="d-none">
+            <div class="row justify-content-center">
+                <div class="col-md-6">
+                    <div class="card shadow-sm border-0">
+                        <div class="card-body p-4">
+                            <h2 class="card-title h4 mb-3">Settings</h2>
+                            <p class="text-muted small mb-4">Your Gemini API key is securely stored only in your browser's local storage and is never saved on our servers.</p>
+                            
+                            <div class="mb-3">
+                                <label class="form-label text-secondary small fw-bold">GEMINI API KEY</label>
+                                <input type="password" class="form-control" id="txtGeminiKey" placeholder="AIzaSy...">
+                            </div>
+                            
+                            <button class="btn btn-primary w-100 fw-bold" id="btnSaveSettings">Save Settings</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
     </main>
 
     <!-- Local Bootstrap JS -->
     <script src="/assets/bootstrap/bootstrap.bundle.min.js"></script>
+    <!-- SweetAlert2 (Local) -->
+    <script src="/assets/sweetalert2/sweetalert2.all.min.js"></script>
     <!-- Application Logic -->
     <script src="/js/api.js"></script>
     <script src="/js/forms.js"></script>

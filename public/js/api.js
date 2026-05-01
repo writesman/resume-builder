@@ -72,5 +72,17 @@ const objApi = {
     fnDeleteEducation: async (intId) => {
         const objResponse = await fetch(`${strBaseUrl}/education/${intId}`, { method: 'DELETE' });
         return objResponse.json();
+    },
+
+    // --- AI Integration ---
+    fnEnhanceText: async (strText, strContext, strApiKey) => {
+        const objResponse = await fetch(`${strBaseUrl}/ai/enhance`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ strText, strContext, strApiKey })
+        });
+        const objData = await objResponse.json();
+        if (!objResponse.ok) throw new Error(objData.error || 'Failed to enhance text');
+        return objData.strEnhancedText;
     }
 };

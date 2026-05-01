@@ -2,6 +2,7 @@ const express = require('express');
 const path = require('path');
 const cors = require('cors');
 const objDb = require('./db');
+const { fnEnhanceTextWithGemini } = require('./gemini');
 
 const objApp = express();
 const intPort = process.env.PORT || 3000;
@@ -215,6 +216,17 @@ objApp.delete('/api/education/:id', (objReq, objRes) => {
         if (objErr) return objRes.status(500).json({ error: objErr.message });
         objRes.json({ deleted: this.changes });
     });
+});
+
+// AI Enhance Route
+objApp.post('/api/ai/enhance', async (objReq, objRes) => {
+    const { strText, strContext, strApiKey } = objReq.body;
+    try {
+        const strEnhanced = await fnEnhanceTextWithGemini(strText, strContext, strApiKey);
+        objRes.json({ strEnhancedText: strEnhanced });
+    } catch (objErr) {
+        objRes.status(500).json({ error: objErr.message });
+    }
 });
 
 // Serve static files from the public directory
