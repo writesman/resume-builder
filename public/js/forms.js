@@ -77,8 +77,8 @@ document.addEventListener('DOMContentLoaded', () => {
             elJob.className = 'list-group-item d-flex justify-content-between align-items-center';
             elJob.innerHTML = `
                 <div>
-                    <h6 class="mb-0 fw-bold">${objJob.strTitle} <span class="fw-normal text-muted">at ${objJob.strCompany}</span></h6>
-                    <small class="text-secondary">${fnFormatDate(objJob.strStartDate)} - ${fnFormatDate(objJob.strEndDate)}</small>
+                    <h3 class="h6 mb-0 fw-bold">${objJob.strTitle} <span class="fw-normal text-dark">at ${objJob.strCompany}</span></h3>
+                    <small class="text-dark">${fnFormatDate(objJob.strStartDate)} - ${fnFormatDate(objJob.strEndDate)}</small>
                 </div>
                 <button class="btn btn-sm btn-outline-danger btnDeleteJob" data-id="${objJob.intId}">Remove</button>
             `;
@@ -124,8 +124,8 @@ document.addEventListener('DOMContentLoaded', () => {
             elEdu.className = 'list-group-item d-flex justify-content-between align-items-center';
             elEdu.innerHTML = `
                 <div>
-                    <h6 class="mb-0 fw-bold">${objEdu.strDegree} <span class="fw-normal text-muted">at ${objEdu.strSchool}</span></h6>
-                    <small class="text-secondary">${fnFormatDate(objEdu.strStartDate)} - ${fnFormatDate(objEdu.strEndDate)}</small>
+                    <h3 class="h6 mb-0 fw-bold">${objEdu.strDegree} <span class="fw-normal text-dark">at ${objEdu.strSchool}</span></h3>
+                    <small class="text-dark">${fnFormatDate(objEdu.strStartDate)} - ${fnFormatDate(objEdu.strEndDate)}</small>
                 </div>
                 <button class="btn btn-sm btn-outline-danger btnDeleteEducation" data-id="${objEdu.intId}">Remove</button>
             `;
@@ -172,8 +172,8 @@ document.addEventListener('DOMContentLoaded', () => {
             const elSkill = document.createElement('span');
             elSkill.className = 'badge bg-primary me-2 p-2 mb-2 d-inline-flex align-items-center rounded-pill';
             elSkill.innerHTML = `
-                <span class="fw-normal opacity-75 me-1">${objSkill.strCategory}:</span> ${objSkill.strName}
-                <button type="button" class="btn-close btn-close-white ms-2 btnDeleteSkill" style="font-size: 0.5rem;" data-id="${objSkill.intId}"></button>
+                <span class="fw-normal me-1">${objSkill.strCategory}:</span> ${objSkill.strName}
+                <button type="button" class="btn-close btn-close-white ms-2 btnDeleteSkill" style="font-size: 0.5rem;" aria-label="Remove Skill" data-id="${objSkill.intId}"></button>
             `;
             divSkillList.appendChild(elSkill);
         });
