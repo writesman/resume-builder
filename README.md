@@ -14,7 +14,7 @@ A professional, single-page resume builder application built with vanilla HTML/C
 
 ## Generative AI Disclosure
 
-This project was developed with the assistance of Generative AI, specifically utilizing an agentic coding assistant powered by the Gemini model through the Antigravity MCP Server environment.
+This project was developed with the assistance of Generative AI, specifically utilizing an agentic coding assistant powered by the Gemini model through the Antigravity MCP Server environment. I wanted to try and develop the project entirely with AI, only reviewing code written by Gemini.
 
 ### Prompt Engineering & Workflow
 The development process used an iterative, orchestration-based workflow rather than simple one-off prompts:
