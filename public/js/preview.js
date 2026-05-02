@@ -2,6 +2,9 @@
  * Resume Preview Logic
  * Fetches data from API and populates the resume view.
  * Uses Hungarian notation.
+ * 
+ * AI Generated: The DOM generation logic and the print styling fixes 
+ * for the resume document were implemented by the Antigravity AI assistant.
  */
 
 document.addEventListener('DOMContentLoaded', () => {
@@ -18,6 +21,8 @@ document.addEventListener('DOMContentLoaded', () => {
         const arrJobs = await objApi.fnGetJobs();
         const arrSkills = await objApi.fnGetSkills();
         const arrEducation = await objApi.fnGetEducation();
+        const arrCerts = await objApi.fnGetCertifications();
+        const arrAwards = await objApi.fnGetAwards();
 
         // 2. Populate Personal Info
         if (objPersonalInfo && objPersonalInfo.strName) {
@@ -136,6 +141,50 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         } else {
             divResumeSkills.innerHTML = '<p class="text-muted fst-italic">No technical skills added.</p>';
+        }
+
+        // 5. Populate Certifications
+        const sectionResumeCertifications = document.getElementById('sectionResumeCertifications');
+        const divResumeCertifications = document.getElementById('divResumeCertifications');
+        divResumeCertifications.innerHTML = '';
+        if (arrCerts && arrCerts.length > 0) {
+            sectionResumeCertifications.classList.remove('d-none');
+            arrCerts.forEach(objCert => {
+                const elCert = document.createElement('div');
+                elCert.className = 'mb-2';
+                elCert.innerHTML = `
+                    <div class="d-flex justify-content-between align-items-baseline mb-0">
+                        <span class="fw-bold text-dark">${objCert.strName}</span>
+                        <span class="text-secondary fw-bold small">${fnFormatDate(objCert.strDate)}</span>
+                    </div>
+                    ${objCert.strDetails ? `<div class="small text-muted">${objCert.strDetails}</div>` : ''}
+                `;
+                divResumeCertifications.appendChild(elCert);
+            });
+        } else {
+            sectionResumeCertifications.classList.add('d-none');
+        }
+
+        // 6. Populate Awards
+        const sectionResumeAwards = document.getElementById('sectionResumeAwards');
+        const divResumeAwards = document.getElementById('divResumeAwards');
+        divResumeAwards.innerHTML = '';
+        if (arrAwards && arrAwards.length > 0) {
+            sectionResumeAwards.classList.remove('d-none');
+            arrAwards.forEach(objAward => {
+                const elAward = document.createElement('div');
+                elAward.className = 'mb-2';
+                elAward.innerHTML = `
+                    <div class="d-flex justify-content-between align-items-baseline mb-0">
+                        <span class="fw-bold text-dark">${objAward.strName}</span>
+                        <span class="text-secondary fw-bold small">${fnFormatDate(objAward.strDate)}</span>
+                    </div>
+                    ${objAward.strDetails ? `<div class="small text-muted">${objAward.strDetails}</div>` : ''}
+                `;
+                divResumeAwards.appendChild(elAward);
+            });
+        } else {
+            sectionResumeAwards.classList.add('d-none');
         }
     };
 

@@ -95,6 +95,56 @@
                             <div id="divSkillList" class="mt-3"></div>
                         </div>
                     </div>
+
+                    <!-- Certifications -->
+                    <div class="card shadow-sm mb-4 mt-4 border-0">
+                        <div class="card-body">
+                            <h2 class="card-title h5 mb-3">Certifications</h2>
+                            <form id="formCertification" class="mb-3">
+                                <div class="row g-2 mb-2">
+                                    <div class="col-md-6">
+                                        <label for="txtCertName" class="form-label text-dark small fw-bold mb-1">CERTIFICATION NAME</label>
+                                        <input type="text" class="form-control" id="txtCertName" placeholder="Certification Name" required>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <label for="txtCertDate" class="form-label text-dark small fw-bold mb-1">DATE</label>
+                                        <input type="month" class="form-control" id="txtCertDate" required>
+                                    </div>
+                                </div>
+                                <div class="mb-3">
+                                    <label for="txtCertDetails" class="visually-hidden">Details</label>
+                                    <textarea class="form-control" id="txtCertDetails" rows="2" placeholder="Details (Optional)"></textarea>
+                                </div>
+                                <button type="submit" class="btn btn-primary w-100 fw-bold" id="btnAddCertification">Add Certification</button>
+                            </form>
+                            <div class="list-group mt-3" id="divCertificationList"></div>
+                        </div>
+                    </div>
+
+                    <!-- Awards -->
+                    <div class="card shadow-sm border-0">
+                        <div class="card-body">
+                            <h2 class="card-title h5 mb-3">Awards</h2>
+                            <form id="formAward" class="mb-3">
+                                <div class="row g-2 mb-2">
+                                    <div class="col-md-6">
+                                        <label for="txtAwardName" class="form-label text-dark small fw-bold mb-1">AWARD NAME</label>
+                                        <input type="text" class="form-control" id="txtAwardName" placeholder="Award Name" required>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <label for="txtAwardDate" class="form-label text-dark small fw-bold mb-1">DATE</label>
+                                        <input type="month" class="form-control" id="txtAwardDate" required>
+                                    </div>
+                                </div>
+                                <div class="mb-3">
+                                    <label for="txtAwardDetails" class="visually-hidden">Details</label>
+                                    <textarea class="form-control" id="txtAwardDetails" rows="2" placeholder="Details (Optional)"></textarea>
+                                </div>
+                                <button type="submit" class="btn btn-primary w-100 fw-bold" id="btnAddAward">Add Award</button>
+                            </form>
+                            <div class="list-group mt-3" id="divAwardList"></div>
+                        </div>
+                    </div>
                 </div>
 
                 <!-- Right Column: Jobs and Education -->
@@ -227,10 +277,26 @@
                     </div>
 
                     <!-- Skills -->
-                    <div class="mb-4">
+                    <div class="mb-4" id="sectionResumeSkills">
                         <h3 class="text-uppercase border-bottom pb-2 mb-3 text-dark h5 fw-bold tracking-wide">Technical Skills</h3>
                         <div id="divResumeSkills">
                             <!-- Skills injected here via JS -->
+                        </div>
+                    </div>
+
+                    <!-- Certifications -->
+                    <div class="mb-4 d-none" id="sectionResumeCertifications">
+                        <h3 class="text-uppercase border-bottom pb-2 mb-3 text-dark h5 fw-bold tracking-wide">Certifications</h3>
+                        <div id="divResumeCertifications">
+                            <!-- Certifications injected here via JS -->
+                        </div>
+                    </div>
+
+                    <!-- Awards -->
+                    <div class="mb-4 d-none" id="sectionResumeAwards">
+                        <h3 class="text-uppercase border-bottom pb-2 mb-3 text-dark h5 fw-bold tracking-wide">Awards</h3>
+                        <div id="divResumeAwards">
+                            <!-- Awards injected here via JS -->
                         </div>
                     </div>
                 </div>
@@ -261,11 +327,34 @@
         <!-- Attribution Footer -->
         <footer class="mt-5 py-3 text-center text-dark small d-print-none border-top">
             <div class="container">
-                Built with <a href="https://getbootstrap.com" target="_blank" rel="noopener" class="link-dark fw-bold text-decoration-underline">Bootstrap 5</a> &amp; 
-                <a href="https://sweetalert2.github.io" target="_blank" rel="noopener" class="link-dark fw-bold text-decoration-underline">SweetAlert2</a>. 
+                <a href="#" data-bs-toggle="modal" data-bs-target="#creditsModal" class="link-dark fw-bold text-decoration-underline">Credits & Attribution</a> | 
                 Powered by Google Gemini API.
             </div>
         </footer>
+
+        <!-- Credits Modal -->
+        <div class="modal fade" id="creditsModal" tabindex="-1" aria-labelledby="creditsModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="creditsModalLabel">Credits & Attribution</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <p>Thank you to the amazing open-source libraries that made this application possible:</p>
+                        <ul>
+                            <li><strong>Bootstrap 5:</strong> Used for responsive styling and layout.</li>
+                            <li><strong>SweetAlert2:</strong> Used for beautiful popup notifications.</li>
+                        </ul>
+                        <p class="small text-muted mt-3">Note: All libraries are hosted locally within the application directory without the use of CDNs to ensure offline compatibility and privacy.</p>
+                        <p class="small text-muted mt-1">Application built by Marcus Writesman.</p>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    </div>
+                </div>
+            </div>
+        </div>
     </main>
 
     <!-- Local Bootstrap JS -->

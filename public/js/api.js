@@ -56,6 +56,42 @@ const objApi = {
         return objResponse.json();
     },
 
+    // --- Certifications ---
+    fnGetCertifications: async () => {
+        const objResponse = await fetch(`${strBaseUrl}/certifications`);
+        return objResponse.json();
+    },
+    fnSaveCertification: async (objData) => {
+        const objResponse = await fetch(`${strBaseUrl}/certifications`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(objData)
+        });
+        return objResponse.json();
+    },
+    fnDeleteCertification: async (intId) => {
+        const objResponse = await fetch(`${strBaseUrl}/certifications/${intId}`, { method: 'DELETE' });
+        return objResponse.json();
+    },
+
+    // --- Awards ---
+    fnGetAwards: async () => {
+        const objResponse = await fetch(`${strBaseUrl}/awards`);
+        return objResponse.json();
+    },
+    fnSaveAward: async (objData) => {
+        const objResponse = await fetch(`${strBaseUrl}/awards`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(objData)
+        });
+        return objResponse.json();
+    },
+    fnDeleteAward: async (intId) => {
+        const objResponse = await fetch(`${strBaseUrl}/awards/${intId}`, { method: 'DELETE' });
+        return objResponse.json();
+    },
+
     // --- Education ---
     fnGetEducation: async () => {
         const objResponse = await fetch(`${strBaseUrl}/education`);

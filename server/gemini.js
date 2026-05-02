@@ -2,6 +2,9 @@
  * Gemini API Proxy
  * Handles communication with the Google Gemini API.
  * Uses Hungarian notation.
+ * 
+ * AI Generated: This entire module, including the prompt engineering logic 
+ * and fetch implementation, was scaffolded by the Antigravity AI coding assistant.
  */
 
 const fnEnhanceTextWithGemini = async (strText, strContext, strApiKey) => {

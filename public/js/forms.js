@@ -1,6 +1,9 @@
 /**
  * Forms and Data Entry Logic
  * Uses Hungarian notation for DOM elements and variables.
+ * 
+ * AI Generated: The data binding, API integration, and event delegation patterns
+ * in this file were generated and structured by the Antigravity AI assistant.
  */
 
 document.addEventListener('DOMContentLoaded', () => {
@@ -28,6 +31,8 @@ document.addEventListener('DOMContentLoaded', () => {
         fnLoadJobs();
         fnLoadSkills();
         fnLoadEducation();
+        fnLoadCertifications();
+        fnLoadAwards();
     };
 
     // Personal Info Submit
@@ -157,6 +162,94 @@ document.addEventListener('DOMContentLoaded', () => {
             await objApi.fnSaveEducation(objData);
             formEducation.reset();
             fnLoadEducation();
+        });
+    }
+
+    // --- Certifications ---
+    const formCertification = document.getElementById('formCertification');
+    const divCertificationList = document.getElementById('divCertificationList');
+
+    const fnLoadCertifications = async () => {
+        if (!divCertificationList) return;
+        const arrCerts = await objApi.fnGetCertifications();
+        divCertificationList.innerHTML = '';
+        arrCerts.forEach(objCert => {
+            const elCert = document.createElement('div');
+            elCert.className = 'list-group-item d-flex justify-content-between align-items-center';
+            elCert.innerHTML = `
+                <div>
+                    <h3 class="h6 mb-0 fw-bold">${objCert.strName}</h3>
+                    <small class="text-dark">${fnFormatDate(objCert.strDate)}</small>
+                </div>
+                <button class="btn btn-sm btn-outline-danger btnDeleteCertification" data-id="${objCert.intId}">Remove</button>
+            `;
+            divCertificationList.appendChild(elCert);
+        });
+
+        document.querySelectorAll('.btnDeleteCertification').forEach(btn => {
+            btn.addEventListener('click', async (objEvent) => {
+                const intId = objEvent.target.getAttribute('data-id');
+                await objApi.fnDeleteCertification(intId);
+                fnLoadCertifications();
+            });
+        });
+    };
+
+    if (formCertification) {
+        formCertification.addEventListener('submit', async (objEvent) => {
+            objEvent.preventDefault();
+            const objData = {
+                strName: document.getElementById('txtCertName').value,
+                strDate: document.getElementById('txtCertDate').value,
+                strDetails: document.getElementById('txtCertDetails').value
+            };
+            await objApi.fnSaveCertification(objData);
+            formCertification.reset();
+            fnLoadCertifications();
+        });
+    }
+
+    // --- Awards ---
+    const formAward = document.getElementById('formAward');
+    const divAwardList = document.getElementById('divAwardList');
+
+    const fnLoadAwards = async () => {
+        if (!divAwardList) return;
+        const arrAwards = await objApi.fnGetAwards();
+        divAwardList.innerHTML = '';
+        arrAwards.forEach(objAward => {
+            const elAward = document.createElement('div');
+            elAward.className = 'list-group-item d-flex justify-content-between align-items-center';
+            elAward.innerHTML = `
+                <div>
+                    <h3 class="h6 mb-0 fw-bold">${objAward.strName}</h3>
+                    <small class="text-dark">${fnFormatDate(objAward.strDate)}</small>
+                </div>
+                <button class="btn btn-sm btn-outline-danger btnDeleteAward" data-id="${objAward.intId}">Remove</button>
+            `;
+            divAwardList.appendChild(elAward);
+        });
+
+        document.querySelectorAll('.btnDeleteAward').forEach(btn => {
+            btn.addEventListener('click', async (objEvent) => {
+                const intId = objEvent.target.getAttribute('data-id');
+                await objApi.fnDeleteAward(intId);
+                fnLoadAwards();
+            });
+        });
+    };
+
+    if (formAward) {
+        formAward.addEventListener('submit', async (objEvent) => {
+            objEvent.preventDefault();
+            const objData = {
+                strName: document.getElementById('txtAwardName').value,
+                strDate: document.getElementById('txtAwardDate').value,
+                strDetails: document.getElementById('txtAwardDetails').value
+            };
+            await objApi.fnSaveAward(objData);
+            formAward.reset();
+            fnLoadAwards();
         });
     }
 
