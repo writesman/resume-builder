@@ -84,8 +84,8 @@ document.addEventListener('DOMContentLoaded', () => {
                 <div class="d-flex align-items-center">
                     <input class="form-check-input me-3 chk-include-job" type="checkbox" value="${objJob.intId}" checked aria-label="Include Job">
                     <div>
-                        <h3 class="h6 mb-0 fw-bold">${objJob.strTitle} <span class="fw-normal text-dark">at ${objJob.strCompany}</span></h3>
-                        <small class="text-dark">${fnFormatDate(objJob.strStartDate)} - ${fnFormatDate(objJob.strEndDate)}</small>
+                        <h3 class="h6 mb-0 fw-bold">${objJob.strTitle} <span class="fw-normal text-body-emphasis">at ${objJob.strCompany}</span></h3>
+                        <small class="text-body-emphasis">${fnFormatDate(objJob.strStartDate)} - ${fnFormatDate(objJob.strEndDate)}</small>
                     </div>
                 </div>
                 <button class="btn btn-sm btn-outline-danger btnDeleteJob" data-id="${objJob.intId}">Remove</button>
@@ -134,8 +134,8 @@ document.addEventListener('DOMContentLoaded', () => {
                 <div class="d-flex align-items-center">
                     <input class="form-check-input me-3 chk-include-edu" type="checkbox" value="${objEdu.intId}" checked aria-label="Include Education">
                     <div>
-                        <h3 class="h6 mb-0 fw-bold">${objEdu.strDegree} <span class="fw-normal text-dark">at ${objEdu.strSchool}</span></h3>
-                        <small class="text-dark">${fnFormatDate(objEdu.strStartDate)} - ${fnFormatDate(objEdu.strEndDate)}</small>
+                        <h3 class="h6 mb-0 fw-bold">${objEdu.strDegree} <span class="fw-normal text-body-emphasis">at ${objEdu.strSchool}</span></h3>
+                        <small class="text-body-emphasis">${fnFormatDate(objEdu.strStartDate)} - ${fnFormatDate(objEdu.strEndDate)}</small>
                     </div>
                 </div>
                 <button class="btn btn-sm btn-outline-danger btnDeleteEducation" data-id="${objEdu.intId}">Remove</button>
@@ -187,7 +187,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     <input class="form-check-input me-3 chk-include-cert" type="checkbox" value="${objCert.intId}" checked aria-label="Include Certification">
                     <div>
                         <h3 class="h6 mb-0 fw-bold">${objCert.strName}</h3>
-                        <small class="text-dark">${fnFormatDate(objCert.strDate)}</small>
+                        <small class="text-body-emphasis">${fnFormatDate(objCert.strDate)}</small>
                     </div>
                 </div>
                 <button class="btn btn-sm btn-outline-danger btnDeleteCertification" data-id="${objCert.intId}">Remove</button>
@@ -234,7 +234,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     <input class="form-check-input me-3 chk-include-award" type="checkbox" value="${objAward.intId}" checked aria-label="Include Award">
                     <div>
                         <h3 class="h6 mb-0 fw-bold">${objAward.strName}</h3>
-                        <small class="text-dark">${fnFormatDate(objAward.strDate)}</small>
+                        <small class="text-body-emphasis">${fnFormatDate(objAward.strDate)}</small>
                     </div>
                 </div>
                 <button class="btn btn-sm btn-outline-danger btnDeleteAward" data-id="${objAward.intId}">Remove</button>
@@ -306,16 +306,27 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-    // --- Settings (API Key) ---
+    // --- Settings (API Key & Theme) ---
     const txtGeminiKey = document.getElementById('txtGeminiKey');
+    const chkDarkMode = document.getElementById('chkDarkMode');
     const btnSaveSettings = document.getElementById('btnSaveSettings');
     
-    if (txtGeminiKey && btnSaveSettings) {
-        // Load saved key on init
+    if (txtGeminiKey && btnSaveSettings && chkDarkMode) {
+        // Load saved key and theme on init
         const strSavedKey = localStorage.getItem('strGeminiKey');
         if (strSavedKey) {
             txtGeminiKey.value = strSavedKey;
         }
+
+        const strTheme = localStorage.getItem('strTheme') || 'light';
+        chkDarkMode.checked = (strTheme === 'dark');
+
+        // Apply theme immediately on toggle
+        chkDarkMode.addEventListener('change', (e) => {
+            const strNewTheme = e.target.checked ? 'dark' : 'light';
+            document.documentElement.setAttribute('data-bs-theme', strNewTheme);
+            localStorage.setItem('strTheme', strNewTheme);
+        });
 
         btnSaveSettings.addEventListener('click', () => {
             localStorage.setItem('strGeminiKey', txtGeminiKey.value.trim());

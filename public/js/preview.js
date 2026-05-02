@@ -83,25 +83,25 @@ document.addEventListener('DOMContentLoaded', () => {
                 elEdu.className = 'mb-3';
                 
                 let strDetailsHtml = '';
-                if (objEdu.strGpa) strDetailsHtml += `<div class="mb-1"><span class="fw-bold text-dark">GPA:</span> ${objEdu.strGpa}</div>`;
+                if (objEdu.strGpa) strDetailsHtml += `<div class="mb-1"><span class="fw-bold text-body-emphasis">GPA:</span> ${objEdu.strGpa}</div>`;
                 
                 if (objEdu.strHonors) {
                     const arrHonors = objEdu.strHonors.split('\n').filter(h => h.trim() !== '');
                     if (arrHonors.length > 0) {
-                        strDetailsHtml += `<div class="mb-1"><span class="fw-bold text-dark">Honors:</span><ul class="mb-0 mt-1">${arrHonors.map(h => `<li>${h}</li>`).join('')}</ul></div>`;
+                        strDetailsHtml += `<div class="mb-1"><span class="fw-bold text-body-emphasis">Honors:</span><ul class="mb-0 mt-1">${arrHonors.map(h => `<li>${h}</li>`).join('')}</ul></div>`;
                     }
                 }
                 
                 if (objEdu.strActivities) {
                     const arrActivities = objEdu.strActivities.split('\n').filter(a => a.trim() !== '');
                     if (arrActivities.length > 0) {
-                        strDetailsHtml += `<div class="mb-1"><span class="fw-bold text-dark">Activities:</span><ul class="mb-0 mt-1">${arrActivities.map(a => `<li>${a}</li>`).join('')}</ul></div>`;
+                        strDetailsHtml += `<div class="mb-1"><span class="fw-bold text-body-emphasis">Activities:</span><ul class="mb-0 mt-1">${arrActivities.map(a => `<li>${a}</li>`).join('')}</ul></div>`;
                     }
                 }
 
                 elEdu.innerHTML = `
                     <div class="d-flex justify-content-between align-items-baseline mb-1">
-                        <h5 class="fw-bold mb-0 text-dark">${objEdu.strDegree}</h5>
+                        <h5 class="fw-bold mb-0 text-body-emphasis">${objEdu.strDegree}</h5>
                         <span class="text-secondary fw-bold small">${fnFormatDate(objEdu.strStartDate)} - ${fnFormatDate(objEdu.strEndDate)}</span>
                     </div>
                     <h6 class="text-secondary fst-italic mb-2">${objEdu.strSchool}</h6>
@@ -128,7 +128,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
                 elJob.innerHTML = `
                     <div class="d-flex justify-content-between align-items-baseline mb-1">
-                        <h5 class="fw-bold mb-0 text-dark">${objJob.strTitle}</h5>
+                        <h5 class="fw-bold mb-0 text-body-emphasis">${objJob.strTitle}</h5>
                         <span class="text-secondary fw-bold small">${fnFormatDate(objJob.strStartDate)} - ${fnFormatDate(objJob.strEndDate)}</span>
                     </div>
                     <h6 class="text-secondary fst-italic mb-2">${objJob.strCompany}</h6>
@@ -154,7 +154,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
             for (const strCategory in objGroupedSkills) {
                 const elSkillRow = document.createElement('div');
-                elSkillRow.className = 'mb-2 text-dark';
+                elSkillRow.className = 'mb-2 text-body-emphasis';
                 elSkillRow.innerHTML = `
                     <span class="fw-bold me-2 text-uppercase" style="font-size: 0.9em;">${strCategory}:</span>
                     <span>${objGroupedSkills[strCategory].join(', ')}</span>
@@ -176,7 +176,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 elCert.className = 'mb-2';
                 elCert.innerHTML = `
                     <div class="d-flex justify-content-between align-items-baseline mb-0">
-                        <span class="fw-bold text-dark">${objCert.strName}</span>
+                        <span class="fw-bold text-body-emphasis">${objCert.strName}</span>
                         <span class="text-secondary fw-bold small">${fnFormatDate(objCert.strDate)}</span>
                     </div>
                     ${objCert.strDetails ? `<div class="small text-muted">${objCert.strDetails}</div>` : ''}
@@ -198,7 +198,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 elAward.className = 'mb-2';
                 elAward.innerHTML = `
                     <div class="d-flex justify-content-between align-items-baseline mb-0">
-                        <span class="fw-bold text-dark">${objAward.strName}</span>
+                        <span class="fw-bold text-body-emphasis">${objAward.strName}</span>
                         <span class="text-secondary fw-bold small">${fnFormatDate(objAward.strDate)}</span>
                     </div>
                     ${objAward.strDetails ? `<div class="small text-muted">${objAward.strDetails}</div>` : ''}
@@ -223,8 +223,11 @@ document.addEventListener('DOMContentLoaded', () => {
         const elResumeDocument = document.getElementById('elResumeDocument');
         const elCardBody = elResumeDocument.querySelector('.card-body');
 
-        document.body.classList.remove('bg-light');
-        document.body.classList.add('bg-white');
+        // Force light mode for printing
+        document.documentElement.setAttribute('data-bs-theme', 'light');
+
+        document.body.classList.remove('bg-body-tertiary');
+        document.body.classList.add('bg-body');
         
         elMainContent.classList.remove('container', 'my-5');
         elMainContent.classList.add('m-0', 'p-0', 'w-100');
@@ -241,8 +244,12 @@ document.addEventListener('DOMContentLoaded', () => {
         const elResumeDocument = document.getElementById('elResumeDocument');
         const elCardBody = elResumeDocument.querySelector('.card-body');
 
-        document.body.classList.add('bg-light');
-        document.body.classList.remove('bg-white');
+        // Restore original theme
+        const strSavedTheme = localStorage.getItem('strTheme') || 'light';
+        document.documentElement.setAttribute('data-bs-theme', strSavedTheme);
+
+        document.body.classList.add('bg-body-tertiary');
+        document.body.classList.remove('bg-body');
         
         elMainContent.classList.add('container', 'my-5');
         elMainContent.classList.remove('m-0', 'p-0', 'w-100');

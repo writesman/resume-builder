@@ -8,8 +8,13 @@
     <link rel="icon" type="image/svg+xml" href="/favicon.svg">
     <!-- Local Bootstrap CSS -->
     <link href="/assets/bootstrap/bootstrap.min.css" rel="stylesheet">
+    <script>
+        // Apply theme early to prevent flash of wrong theme
+        const strSavedTheme = localStorage.getItem('strTheme') || 'light';
+        document.documentElement.setAttribute('data-bs-theme', strSavedTheme);
+    </script>
 </head>
-<body class="bg-light">
+<body class="bg-body-tertiary">
     <!-- Navigation -->
     <nav class="navbar navbar-expand-lg navbar-dark bg-primary shadow-sm d-print-none">
         <div class="container">
@@ -37,9 +42,9 @@
     <main class="container my-5" id="elMainContent">
         <!-- Home Section (Data Entry) -->
         <section id="elSectionHome">
-            <div class="p-4 mb-4 bg-white rounded-3 shadow-sm border">
+            <div class="p-4 mb-4 bg-body rounded-3 shadow-sm border">
                 <h1 class="display-6 fw-bold">ResumeBuilder Pro</h1>
-                <p class="fs-5 text-muted">Add your details below to generate your professional resume.</p>
+                <p class="fs-5 text-body-secondary mb-0">Add your details below to generate your professional resume.</p>
             </div>
             
             <div class="row">
@@ -51,23 +56,23 @@
                             <h2 class="card-title h5 mb-3">Personal Information</h2>
                             <form id="formPersonalInfo">
                                 <div class="mb-3">
-                                    <label for="txtName" class="form-label text-dark small fw-bold">FULL NAME</label>
+                                    <label for="txtName" class="form-label text-body-emphasis small fw-bold">FULL NAME</label>
                                     <input type="text" class="form-control" id="txtName" required>
                                 </div>
                                 <div class="mb-3">
-                                    <label for="txtEmail" class="form-label text-dark small fw-bold">EMAIL</label>
+                                    <label for="txtEmail" class="form-label text-body-emphasis small fw-bold">EMAIL</label>
                                     <input type="email" class="form-control" id="txtEmail" required>
                                 </div>
                                 <div class="mb-3">
-                                    <label for="txtPhone" class="form-label text-dark small fw-bold">PHONE</label>
+                                    <label for="txtPhone" class="form-label text-body-emphasis small fw-bold">PHONE</label>
                                     <input type="text" class="form-control" id="txtPhone">
                                 </div>
                                 <div class="mb-3">
-                                    <label for="txtAddress" class="form-label text-dark small fw-bold">ADDRESS</label>
+                                    <label for="txtAddress" class="form-label text-body-emphasis small fw-bold">ADDRESS</label>
                                     <input type="text" class="form-control" id="txtAddress">
                                 </div>
                                 <div class="mb-3">
-                                    <label for="txtLinks" class="form-label text-dark small fw-bold">LINKS (LinkedIn, GitHub)</label>
+                                    <label for="txtLinks" class="form-label text-body-emphasis small fw-bold">LINKS (LinkedIn, GitHub)</label>
                                     <textarea class="form-control" id="txtLinks" rows="2"></textarea>
                                 </div>
                                 <button type="submit" class="btn btn-primary w-100 fw-bold" id="btnSavePersonalInfo">Save Personal Info</button>
@@ -103,11 +108,11 @@
                             <form id="formCertification" class="mb-3">
                                 <div class="row g-2 mb-2">
                                     <div class="col-md-6">
-                                        <label for="txtCertName" class="form-label text-dark small fw-bold mb-1">CERTIFICATION NAME</label>
+                                        <label for="txtCertName" class="form-label text-body-emphasis small fw-bold mb-1">CERTIFICATION NAME</label>
                                         <input type="text" class="form-control" id="txtCertName" placeholder="Certification Name" required>
                                     </div>
                                     <div class="col-md-6">
-                                        <label for="txtCertDate" class="form-label text-dark small fw-bold mb-1">DATE</label>
+                                        <label for="txtCertDate" class="form-label text-body-emphasis small fw-bold mb-1">DATE</label>
                                         <input type="month" class="form-control" id="txtCertDate" required>
                                     </div>
                                 </div>
@@ -128,11 +133,11 @@
                             <form id="formAward" class="mb-3">
                                 <div class="row g-2 mb-2">
                                     <div class="col-md-6">
-                                        <label for="txtAwardName" class="form-label text-dark small fw-bold mb-1">AWARD NAME</label>
+                                        <label for="txtAwardName" class="form-label text-body-emphasis small fw-bold mb-1">AWARD NAME</label>
                                         <input type="text" class="form-control" id="txtAwardName" placeholder="Award Name" required>
                                     </div>
                                     <div class="col-md-6">
-                                        <label for="txtAwardDate" class="form-label text-dark small fw-bold mb-1">DATE</label>
+                                        <label for="txtAwardDate" class="form-label text-body-emphasis small fw-bold mb-1">DATE</label>
                                         <input type="month" class="form-control" id="txtAwardDate" required>
                                     </div>
                                 </div>
@@ -166,11 +171,11 @@
                                 </div>
                                 <div class="row g-2 mb-3">
                                     <div class="col-md-6">
-                                        <label for="txtEduStart" class="form-label text-dark small fw-bold mb-1">START DATE</label>
+                                        <label for="txtEduStart" class="form-label text-body-emphasis small fw-bold mb-1">START DATE</label>
                                         <input type="month" class="form-control" id="txtEduStart" required>
                                     </div>
                                     <div class="col-md-6">
-                                        <label for="txtEduEnd" class="form-label text-dark small fw-bold mb-1">END DATE (Leave empty if Present)</label>
+                                        <label for="txtEduEnd" class="form-label text-body-emphasis small fw-bold mb-1">END DATE (Leave empty if Present)</label>
                                         <input type="month" class="form-control" id="txtEduEnd">
                                     </div>
                                 </div>
@@ -180,14 +185,14 @@
                                 </div>
                                 <div class="mb-3">
                                     <div class="d-flex justify-content-between align-items-center mb-1">
-                                        <label for="txtEduHonors" class="form-label text-dark small fw-bold mb-0">HONORS / AWARDS (Optional, one per line)</label>
+                                        <label for="txtEduHonors" class="form-label text-body-emphasis small fw-bold mb-0">HONORS / AWARDS (Optional, one per line)</label>
                                         <button type="button" class="btn btn-sm btn-outline-primary" id="btnAiHonors">✨ Enhance</button>
                                     </div>
                                     <textarea class="form-control" id="txtEduHonors" rows="2"></textarea>
                                 </div>
                                 <div class="mb-3">
                                     <div class="d-flex justify-content-between align-items-center mb-1">
-                                        <label for="txtEduActivities" class="form-label text-dark small fw-bold mb-0">ACTIVITIES / SOCIETIES (Optional, one per line)</label>
+                                        <label for="txtEduActivities" class="form-label text-body-emphasis small fw-bold mb-0">ACTIVITIES / SOCIETIES (Optional, one per line)</label>
                                         <button type="button" class="btn btn-sm btn-outline-primary" id="btnAiActivities">✨ Enhance</button>
                                     </div>
                                     <textarea class="form-control" id="txtEduActivities" rows="2"></textarea>
@@ -215,17 +220,17 @@
                                 </div>
                                 <div class="row g-2 mb-3">
                                     <div class="col-md-6">
-                                        <label for="txtJobStart" class="form-label text-dark small fw-bold mb-1">START DATE</label>
+                                        <label for="txtJobStart" class="form-label text-body-emphasis small fw-bold mb-1">START DATE</label>
                                         <input type="month" class="form-control" id="txtJobStart" required>
                                     </div>
                                     <div class="col-md-6">
-                                        <label for="txtJobEnd" class="form-label text-dark small fw-bold mb-1">END DATE (Leave empty if Present)</label>
+                                        <label for="txtJobEnd" class="form-label text-body-emphasis small fw-bold mb-1">END DATE (Leave empty if Present)</label>
                                         <input type="month" class="form-control" id="txtJobEnd">
                                     </div>
                                 </div>
                                 <div class="mb-3">
                                     <div class="d-flex justify-content-between align-items-center mb-1">
-                                        <label for="txtJobResponsibilities" class="form-label text-dark small fw-bold mb-0">RESPONSIBILITIES / DETAILS (one per line)</label>
+                                        <label for="txtJobResponsibilities" class="form-label text-body-emphasis small fw-bold mb-0">RESPONSIBILITIES / DETAILS (one per line)</label>
                                         <button type="button" class="btn btn-sm btn-outline-primary" id="btnAiResponsibilities">✨ Enhance</button>
                                     </div>
                                     <textarea class="form-control" id="txtJobResponsibilities" rows="3"></textarea>
@@ -249,11 +254,11 @@
             </div>
             
             <!-- The Actual Resume Page (styled like a piece of paper) -->
-            <div class="card shadow border-0" id="elResumeDocument" style="min-height: 1056px; max-width: 8.5in; margin: 0 auto;">
+            <div class="card shadow border-0" id="elResumeDocument" data-bs-theme="light" style="min-height: 1056px; max-width: 8.5in; margin: 0 auto;">
                 <div class="card-body p-5">
                     <!-- Header (Name & Contact) -->
                     <div class="text-center mb-4 border-bottom pb-4">
-                        <h2 class="display-5 fw-bold text-uppercase mb-2 text-dark" id="lblResumeName">Your Name</h2>
+                        <h2 class="display-5 fw-bold text-uppercase mb-2 text-body-emphasis" id="lblResumeName">Your Name</h2>
                         <p class="fs-6 text-secondary mb-1" id="lblResumeContact">
                             Phone | Email | Address
                         </p>
@@ -262,7 +267,7 @@
 
                     <!-- Education -->
                     <div class="mb-4">
-                        <h3 class="text-uppercase border-bottom pb-2 mb-3 text-dark h5 fw-bold tracking-wide">Education</h3>
+                        <h3 class="text-uppercase border-bottom pb-2 mb-3 text-body-emphasis h5 fw-bold tracking-wide">Education</h3>
                         <div id="divResumeEducation">
                             <!-- Education injected here via JS -->
                         </div>
@@ -270,7 +275,7 @@
 
                     <!-- Work Experience -->
                     <div class="mb-4">
-                        <h3 class="text-uppercase border-bottom pb-2 mb-3 text-dark h5 fw-bold tracking-wide">Professional Experience</h3>
+                        <h3 class="text-uppercase border-bottom pb-2 mb-3 text-body-emphasis h5 fw-bold tracking-wide">Professional Experience</h3>
                         <div id="divResumeJobs">
                             <!-- Jobs injected here via JS -->
                         </div>
@@ -278,7 +283,7 @@
 
                     <!-- Skills -->
                     <div class="mb-4" id="sectionResumeSkills">
-                        <h3 class="text-uppercase border-bottom pb-2 mb-3 text-dark h5 fw-bold tracking-wide">Technical Skills</h3>
+                        <h3 class="text-uppercase border-bottom pb-2 mb-3 text-body-emphasis h5 fw-bold tracking-wide">Technical Skills</h3>
                         <div id="divResumeSkills">
                             <!-- Skills injected here via JS -->
                         </div>
@@ -286,7 +291,7 @@
 
                     <!-- Certifications -->
                     <div class="mb-4 d-none" id="sectionResumeCertifications">
-                        <h3 class="text-uppercase border-bottom pb-2 mb-3 text-dark h5 fw-bold tracking-wide">Certifications</h3>
+                        <h3 class="text-uppercase border-bottom pb-2 mb-3 text-body-emphasis h5 fw-bold tracking-wide">Certifications</h3>
                         <div id="divResumeCertifications">
                             <!-- Certifications injected here via JS -->
                         </div>
@@ -294,7 +299,7 @@
 
                     <!-- Awards -->
                     <div class="mb-4 d-none" id="sectionResumeAwards">
-                        <h3 class="text-uppercase border-bottom pb-2 mb-3 text-dark h5 fw-bold tracking-wide">Awards</h3>
+                        <h3 class="text-uppercase border-bottom pb-2 mb-3 text-body-emphasis h5 fw-bold tracking-wide">Awards</h3>
                         <div id="divResumeAwards">
                             <!-- Awards injected here via JS -->
                         </div>
@@ -313,8 +318,13 @@
                             <p class="text-muted small mb-4">Your Gemini API key is securely stored only in your browser's local storage and is never saved on our servers.</p>
                             
                             <div class="mb-3">
-                                <label for="txtGeminiKey" class="form-label text-dark small fw-bold">GEMINI API KEY</label>
+                                <label for="txtGeminiKey" class="form-label text-body-emphasis small fw-bold">GEMINI API KEY</label>
                                 <input type="password" class="form-control" id="txtGeminiKey" placeholder="AIzaSy...">
+                            </div>
+
+                            <div class="form-check form-switch mb-4">
+                                <input class="form-check-input" type="checkbox" id="chkDarkMode">
+                                <label class="form-check-label text-body-emphasis small fw-bold" for="chkDarkMode">DARK MODE</label>
                             </div>
                             
                             <button class="btn btn-primary w-100 fw-bold" id="btnSaveSettings">Save Settings</button>
@@ -325,9 +335,9 @@
         </section>
         
         <!-- Attribution Footer -->
-        <footer class="mt-5 py-3 text-center text-dark small d-print-none border-top">
+        <footer class="mt-5 py-3 text-center text-body-emphasis small d-print-none border-top">
             <div class="container">
-                <a href="#" data-bs-toggle="modal" data-bs-target="#creditsModal" class="link-dark fw-bold text-decoration-underline">Credits & Attribution</a> | 
+                <a href="#" data-bs-toggle="modal" data-bs-target="#creditsModal" class="link-body-emphasis fw-bold text-decoration-underline">Credits & Attribution</a> | 
                 Powered by Google Gemini API.
             </div>
         </footer>
