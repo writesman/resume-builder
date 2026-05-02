@@ -16,13 +16,35 @@ document.addEventListener('DOMContentLoaded', () => {
     const divResumeSkills = document.getElementById('divResumeSkills');
 
     window.fnGenerateResumePreview = async () => {
-        // 1. Fetch all data
+        // Helper to get checked items from the data entry forms
+        const fnGetSelectedIds = (strSelector) => {
+            return Array.from(document.querySelectorAll(strSelector))
+                .filter(el => el.checked)
+                .map(el => parseInt(el.value));
+        };
+
+        // 1. Fetch all data and filter by user selection
         const objPersonalInfo = await objApi.fnGetPersonalInfo();
-        const arrJobs = await objApi.fnGetJobs();
-        const arrSkills = await objApi.fnGetSkills();
-        const arrEducation = await objApi.fnGetEducation();
-        const arrCerts = await objApi.fnGetCertifications();
-        const arrAwards = await objApi.fnGetAwards();
+        
+        let arrJobs = await objApi.fnGetJobs();
+        const arrSelectedJobs = fnGetSelectedIds('.chk-include-job');
+        arrJobs = arrJobs.filter(obj => arrSelectedJobs.includes(obj.intId));
+
+        let arrSkills = await objApi.fnGetSkills();
+        const arrSelectedSkills = fnGetSelectedIds('.chk-include-skill');
+        arrSkills = arrSkills.filter(obj => arrSelectedSkills.includes(obj.intId));
+
+        let arrEducation = await objApi.fnGetEducation();
+        const arrSelectedEdu = fnGetSelectedIds('.chk-include-edu');
+        arrEducation = arrEducation.filter(obj => arrSelectedEdu.includes(obj.intId));
+
+        let arrCerts = await objApi.fnGetCertifications();
+        const arrSelectedCerts = fnGetSelectedIds('.chk-include-cert');
+        arrCerts = arrCerts.filter(obj => arrSelectedCerts.includes(obj.intId));
+
+        let arrAwards = await objApi.fnGetAwards();
+        const arrSelectedAwards = fnGetSelectedIds('.chk-include-award');
+        arrAwards = arrAwards.filter(obj => arrSelectedAwards.includes(obj.intId));
 
         // 2. Populate Personal Info
         if (objPersonalInfo && objPersonalInfo.strName) {

@@ -81,9 +81,12 @@ document.addEventListener('DOMContentLoaded', () => {
             const elJob = document.createElement('div');
             elJob.className = 'list-group-item d-flex justify-content-between align-items-center';
             elJob.innerHTML = `
-                <div>
-                    <h3 class="h6 mb-0 fw-bold">${objJob.strTitle} <span class="fw-normal text-dark">at ${objJob.strCompany}</span></h3>
-                    <small class="text-dark">${fnFormatDate(objJob.strStartDate)} - ${fnFormatDate(objJob.strEndDate)}</small>
+                <div class="d-flex align-items-center">
+                    <input class="form-check-input me-3 chk-include-job" type="checkbox" value="${objJob.intId}" checked aria-label="Include Job">
+                    <div>
+                        <h3 class="h6 mb-0 fw-bold">${objJob.strTitle} <span class="fw-normal text-dark">at ${objJob.strCompany}</span></h3>
+                        <small class="text-dark">${fnFormatDate(objJob.strStartDate)} - ${fnFormatDate(objJob.strEndDate)}</small>
+                    </div>
                 </div>
                 <button class="btn btn-sm btn-outline-danger btnDeleteJob" data-id="${objJob.intId}">Remove</button>
             `;
@@ -128,9 +131,12 @@ document.addEventListener('DOMContentLoaded', () => {
             const elEdu = document.createElement('div');
             elEdu.className = 'list-group-item d-flex justify-content-between align-items-center';
             elEdu.innerHTML = `
-                <div>
-                    <h3 class="h6 mb-0 fw-bold">${objEdu.strDegree} <span class="fw-normal text-dark">at ${objEdu.strSchool}</span></h3>
-                    <small class="text-dark">${fnFormatDate(objEdu.strStartDate)} - ${fnFormatDate(objEdu.strEndDate)}</small>
+                <div class="d-flex align-items-center">
+                    <input class="form-check-input me-3 chk-include-edu" type="checkbox" value="${objEdu.intId}" checked aria-label="Include Education">
+                    <div>
+                        <h3 class="h6 mb-0 fw-bold">${objEdu.strDegree} <span class="fw-normal text-dark">at ${objEdu.strSchool}</span></h3>
+                        <small class="text-dark">${fnFormatDate(objEdu.strStartDate)} - ${fnFormatDate(objEdu.strEndDate)}</small>
+                    </div>
                 </div>
                 <button class="btn btn-sm btn-outline-danger btnDeleteEducation" data-id="${objEdu.intId}">Remove</button>
             `;
@@ -177,9 +183,12 @@ document.addEventListener('DOMContentLoaded', () => {
             const elCert = document.createElement('div');
             elCert.className = 'list-group-item d-flex justify-content-between align-items-center';
             elCert.innerHTML = `
-                <div>
-                    <h3 class="h6 mb-0 fw-bold">${objCert.strName}</h3>
-                    <small class="text-dark">${fnFormatDate(objCert.strDate)}</small>
+                <div class="d-flex align-items-center">
+                    <input class="form-check-input me-3 chk-include-cert" type="checkbox" value="${objCert.intId}" checked aria-label="Include Certification">
+                    <div>
+                        <h3 class="h6 mb-0 fw-bold">${objCert.strName}</h3>
+                        <small class="text-dark">${fnFormatDate(objCert.strDate)}</small>
+                    </div>
                 </div>
                 <button class="btn btn-sm btn-outline-danger btnDeleteCertification" data-id="${objCert.intId}">Remove</button>
             `;
@@ -221,9 +230,12 @@ document.addEventListener('DOMContentLoaded', () => {
             const elAward = document.createElement('div');
             elAward.className = 'list-group-item d-flex justify-content-between align-items-center';
             elAward.innerHTML = `
-                <div>
-                    <h3 class="h6 mb-0 fw-bold">${objAward.strName}</h3>
-                    <small class="text-dark">${fnFormatDate(objAward.strDate)}</small>
+                <div class="d-flex align-items-center">
+                    <input class="form-check-input me-3 chk-include-award" type="checkbox" value="${objAward.intId}" checked aria-label="Include Award">
+                    <div>
+                        <h3 class="h6 mb-0 fw-bold">${objAward.strName}</h3>
+                        <small class="text-dark">${fnFormatDate(objAward.strDate)}</small>
+                    </div>
                 </div>
                 <button class="btn btn-sm btn-outline-danger btnDeleteAward" data-id="${objAward.intId}">Remove</button>
             `;
@@ -265,6 +277,7 @@ document.addEventListener('DOMContentLoaded', () => {
             const elSkill = document.createElement('span');
             elSkill.className = 'badge bg-primary me-2 p-2 mb-2 d-inline-flex align-items-center rounded-pill';
             elSkill.innerHTML = `
+                <input class="form-check-input me-1 chk-include-skill" style="transform: scale(0.8);" type="checkbox" value="${objSkill.intId}" checked aria-label="Include Skill">
                 <span class="fw-normal me-1">${objSkill.strCategory}:</span> ${objSkill.strName}
                 <button type="button" class="btn-close btn-close-white ms-2 btnDeleteSkill" style="font-size: 0.5rem;" aria-label="Remove Skill" data-id="${objSkill.intId}"></button>
             `;
