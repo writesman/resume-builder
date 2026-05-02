@@ -22,6 +22,7 @@ The development process used an iterative, orchestration-based workflow rather t
 2. **Feature Iteration:** Incremental prompts to add specific features, like the "✨ Enhance" buttons, binding them to local storage keys, and implementing data filtering.
 3. **Accessibility Audit:** Specific prompts directing the AI to analyze Lighthouse scores and adjust heading hierarchy and color contrast to achieve a 100% accessibility rating.
 4. **Desktop Wrap:** Final orchestrations to configure ElectronJS for a native desktop experience and resolve print pagination issues.
+
 *Rules File:* A complete copy of the agent's persistent system prompt and MCP server configuration details can be found in [RULES.md](RULES.md).
 
 ### In-App AI Features

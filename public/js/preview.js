@@ -47,7 +47,9 @@ document.addEventListener('DOMContentLoaded', () => {
         arrAwards = arrAwards.filter(obj => arrSelectedAwards.includes(obj.intId));
 
         // 2. Populate Personal Info
+        const sectionResumeHeader = document.getElementById('sectionResumeHeader');
         if (objPersonalInfo && objPersonalInfo.strName) {
+            sectionResumeHeader.classList.remove('d-none');
             lblResumeName.textContent = objPersonalInfo.strName;
             
             const arrContact = [];
@@ -58,8 +60,9 @@ document.addEventListener('DOMContentLoaded', () => {
             
             lblResumeLinks.textContent = objPersonalInfo.strLinks || '';
         } else {
-            lblResumeName.textContent = 'NO NAME PROVIDED';
-            lblResumeContact.innerHTML = 'Add your information in the Data Entry section.';
+            sectionResumeHeader.classList.add('d-none');
+            lblResumeName.textContent = '';
+            lblResumeContact.innerHTML = '';
             lblResumeLinks.textContent = '';
         }
 
@@ -75,9 +78,11 @@ document.addEventListener('DOMContentLoaded', () => {
         };
 
         // 3. Populate Education
+        const sectionResumeEducation = document.getElementById('sectionResumeEducation');
         const divResumeEducation = document.getElementById('divResumeEducation');
         divResumeEducation.innerHTML = '';
         if (arrEducation && arrEducation.length > 0) {
+            sectionResumeEducation.classList.remove('d-none');
             arrEducation.forEach(objEdu => {
                 const elEdu = document.createElement('div');
                 elEdu.className = 'mb-3';
@@ -110,12 +115,15 @@ document.addEventListener('DOMContentLoaded', () => {
                 divResumeEducation.appendChild(elEdu);
             });
         } else {
-            divResumeEducation.innerHTML = '<p class="text-muted fst-italic">No education added.</p>';
+            sectionResumeEducation.classList.add('d-none');
         }
 
         // 4. Populate Jobs
+        const sectionResumeJobs = document.getElementById('sectionResumeJobs');
+        const divResumeJobs = document.getElementById('divResumeJobs');
         divResumeJobs.innerHTML = '';
         if (arrJobs && arrJobs.length > 0) {
+            sectionResumeJobs.classList.remove('d-none');
             arrJobs.forEach(objJob => {
                 const elJob = document.createElement('div');
                 elJob.className = 'mb-4';
@@ -137,12 +145,15 @@ document.addEventListener('DOMContentLoaded', () => {
                 divResumeJobs.appendChild(elJob);
             });
         } else {
-            divResumeJobs.innerHTML = '<p class="text-muted fst-italic">No work experience added.</p>';
+            sectionResumeJobs.classList.add('d-none');
         }
 
         // 4. Populate Skills (Grouped by Category)
+        const sectionResumeSkills = document.getElementById('sectionResumeSkills');
+        const divResumeSkills = document.getElementById('divResumeSkills');
         divResumeSkills.innerHTML = '';
         if (arrSkills && arrSkills.length > 0) {
+            sectionResumeSkills.classList.remove('d-none');
             // Group skills by category
             const objGroupedSkills = {};
             arrSkills.forEach(objSkill => {
@@ -162,7 +173,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 divResumeSkills.appendChild(elSkillRow);
             }
         } else {
-            divResumeSkills.innerHTML = '<p class="text-muted fst-italic">No technical skills added.</p>';
+            sectionResumeSkills.classList.add('d-none');
         }
 
         // 5. Populate Certifications

@@ -257,16 +257,14 @@
             <div class="card shadow border-0" id="elResumeDocument" data-bs-theme="light" style="min-height: 1056px; max-width: 8.5in; margin: 0 auto;">
                 <div class="card-body p-5">
                     <!-- Header (Name & Contact) -->
-                    <div class="text-center mb-4 border-bottom pb-4">
-                        <h2 class="display-5 fw-bold text-uppercase mb-2 text-body-emphasis" id="lblResumeName">Your Name</h2>
-                        <p class="fs-6 text-secondary mb-1" id="lblResumeContact">
-                            Phone | Email | Address
-                        </p>
+                    <div class="text-center mb-4 border-bottom pb-4" id="sectionResumeHeader">
+                        <h2 class="display-5 fw-bold text-uppercase mb-2 text-body-emphasis" id="lblResumeName"></h2>
+                        <p class="fs-6 text-secondary mb-1" id="lblResumeContact"></p>
                         <p class="text-primary mb-0 small" id="lblResumeLinks"></p>
                     </div>
 
                     <!-- Education -->
-                    <div class="mb-4">
+                    <div class="mb-4" id="sectionResumeEducation">
                         <h3 class="text-uppercase border-bottom pb-2 mb-3 text-body-emphasis h5 fw-bold tracking-wide">Education</h3>
                         <div id="divResumeEducation">
                             <!-- Education injected here via JS -->
@@ -274,7 +272,7 @@
                     </div>
 
                     <!-- Work Experience -->
-                    <div class="mb-4">
+                    <div class="mb-4" id="sectionResumeJobs">
                         <h3 class="text-uppercase border-bottom pb-2 mb-3 text-body-emphasis h5 fw-bold tracking-wide">Professional Experience</h3>
                         <div id="divResumeJobs">
                             <!-- Jobs injected here via JS -->
@@ -290,7 +288,7 @@
                     </div>
 
                     <!-- Certifications -->
-                    <div class="mb-4 d-none" id="sectionResumeCertifications">
+                    <div class="mb-4" id="sectionResumeCertifications">
                         <h3 class="text-uppercase border-bottom pb-2 mb-3 text-body-emphasis h5 fw-bold tracking-wide">Certifications</h3>
                         <div id="divResumeCertifications">
                             <!-- Certifications injected here via JS -->
@@ -298,7 +296,7 @@
                     </div>
 
                     <!-- Awards -->
-                    <div class="mb-4 d-none" id="sectionResumeAwards">
+                    <div class="mb-4" id="sectionResumeAwards">
                         <h3 class="text-uppercase border-bottom pb-2 mb-3 text-body-emphasis h5 fw-bold tracking-wide">Awards</h3>
                         <div id="divResumeAwards">
                             <!-- Awards injected here via JS -->
