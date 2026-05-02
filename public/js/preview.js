@@ -159,6 +159,7 @@ document.addEventListener('DOMContentLoaded', () => {
         elMainContent.classList.add('m-0', 'p-0', 'w-100');
 
         elResumeDocument.classList.remove('shadow');
+        elResumeDocument.style.minHeight = 'auto'; // Prevent forcing an empty second page
         elCardBody.classList.remove('p-5');
         elCardBody.classList.add('p-0');
     });
@@ -176,6 +177,7 @@ document.addEventListener('DOMContentLoaded', () => {
         elMainContent.classList.remove('m-0', 'p-0', 'w-100');
 
         elResumeDocument.classList.add('shadow');
+        elResumeDocument.style.minHeight = '1056px'; // Restore paper-like preview
         elCardBody.classList.add('p-5');
         elCardBody.classList.remove('p-0');
     });

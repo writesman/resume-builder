@@ -2,14 +2,18 @@
   "name": "resume-builder",
   "version": "1.0.0",
   "description": "CSC3100 Final Project - Resume Builder",
-  "main": "server/index.js",
+  "main": "main.js",
   "scripts": {
     "start": "node server/index.js",
-    "dev": "node --watch server/index.js"
+    "dev": "node --watch server/index.js",
+    "electron": "electron ."
   },
   "dependencies": {
     "cors": "^2.8.5",
     "express": "^4.19.2",
     "sqlite3": "^6.0.1"
+  },
+  "devDependencies": {
+    "electron": "^41.4.0"
   }
 }
